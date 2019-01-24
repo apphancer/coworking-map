@@ -19,6 +19,8 @@ Encore
      */
     .addEntry('app', './assets/js/app.js')
 
+    .enableReactPreset()
+
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
@@ -33,6 +35,22 @@ Encore
 
 // uncomment if you use Sass/SCSS files
 .enableSassLoader()
+
+
+    .configureBabel(function(babelConfig) {
+        // add additional presets
+        // babelConfig.presets.push('@babel/preset-flow');
+
+        // no plugins are added by default, but you can add some
+        babelConfig.plugins.push('@babel/plugin-proposal-class-properties');
+    }, {
+        // node_modules is not processed through Babel by default
+        // but you can whitelist specific modules to process
+        // include_node_modules: ['foundation-sites']
+
+        // or completely control the exclude
+        // exclude: /bower_components/
+    })
 
 // uncomment if you're having problems with a jQuery plugin
 //.autoProvidejQuery()
