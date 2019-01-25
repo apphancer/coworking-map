@@ -58,7 +58,7 @@ class Application extends React.Component {
                 data: placesData
             });
 
-            map.loadImage('/coworking-map/web/marker.png', function (error, image) {
+            map.loadImage('build/images/marker.png', function (error, image) {
                 if (error) throw error;
                 map.addImage('marker', image);
             });
@@ -68,7 +68,8 @@ class Application extends React.Component {
                 source: 'places',
                 type: 'symbol',
                 layout: {
-                    'icon-image': 'marker'
+                    'icon-image': 'marker',
+                    'icon-size': 0.25
                 }
             });
 
@@ -106,7 +107,7 @@ class Application extends React.Component {
                 map.getCanvas().style.cursor = '';
             });
 
-            // map.getSource('places').setData(placesData);
+            setTimeout(function(){ map.getSource('places').setData(placesData); }, 3000)
         });
     }
 

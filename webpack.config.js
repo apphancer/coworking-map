@@ -30,12 +30,15 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
-// uncomment if you use TypeScript
-//.enableTypeScriptLoader()
+    // uncomment if you use TypeScript
+    //.enableTypeScriptLoader()
 
-// uncomment if you use Sass/SCSS files
-.enableSassLoader()
+    // uncomment if you use Sass/SCSS files
+    .enableSassLoader()
 
+    .copyFiles([
+        {from: './assets/images', to: 'images/[path][name].[ext]'},
+    ])
 
     .configureBabel(function(babelConfig) {
         // add additional presets
