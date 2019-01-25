@@ -63,37 +63,35 @@ body {
   overflow: hidden;
 }
 
-#app, .row, .col-8 { // @todo[m]: add specific class names
+#app, .full-height {
   height: 100%;
 }
 
-.col-4 { // @todo[m]: add specific class names
-  background-color: $navy-dark;
-}
-
-.map-wrapper {
+#map-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
+
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    color: $navy-dark;
+  }
 }
 
-
-#map {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  color: $navy-dark;
-}
-
-
-ul li.list-group-item {
+#results-details {
   background-color: $navy-dark;
-}
 
-.scrollable {
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  ul {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    li.list-group-item {
+      background-color: $navy-dark;
+    }
+  }
 }

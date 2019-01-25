@@ -121,15 +121,15 @@ class Application extends React.Component {
         const items = placesData.features;
 
         return (
-            <div className="row">
-                <div className="col-8">
-                    <div className="map-wrapper">
+            <div className="row full-height">
+                <div className="col-8 full-height">
+                    <div id="map-wrapper">
                         <div ref={el => this.mapContainer = el} className="map" id="map"/>
                     </div>
                 </div>
-                <div className="col-4">
+                <div className="col-4 full-height" id="results-details">
                     <h1>Coworking spaces</h1>
-                    <ul className="list-group scrollable">
+                    <ul className="list-group">
                         {items.map(function (item, key) {
                             return (
                                 <li key={key} className="list-group-item">
