@@ -1,4 +1,11 @@
-require('../css/app.scss');
+import React from 'react';
+import {render} from 'react-dom';
+import CoworkingMap from './CoworkingMap';
 
+import '../css/app.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import './map';
+
+render(
+    <CoworkingMap/>,
+    document.getElementById('app')
+);

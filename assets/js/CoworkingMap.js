@@ -8,7 +8,6 @@ places.features = berlinPlaces;
 
 export default class CoworkingMap extends Component {
     componentDidMount() {
-
         mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
         const map = new mapboxgl.Map({
