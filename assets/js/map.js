@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {render} from 'react-dom';
 import mapboxgl from 'mapbox-gl';
 import berlinPlaces from '../data/berlin';
@@ -7,7 +7,7 @@ let places = {};
 places.type = "FeatureCollection"
 places.features = berlinPlaces;
 
-class Application extends React.Component {
+class Application extends Component {
     componentDidMount() {
 
         mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
@@ -76,7 +76,9 @@ class Application extends React.Component {
                 map.getCanvas().style.cursor = '';
             });
 
-            setTimeout(function(){ map.getSource('places').setData(places); }, 3000); // @todo[m]: fix issue with layer randomply displaying
+            setTimeout(function () {
+                map.getSource('places').setData(places);
+            }, 3000); // @todo[m]: fix issue with layer randomply displaying
         });
     }
 
@@ -88,8 +90,6 @@ class Application extends React.Component {
     }
 
     render() {
-        const items = places.features;
-
         return (
             <div className="row full-height">
                 <div className="col-8 full-height">
@@ -100,15 +100,13 @@ class Application extends React.Component {
                 <div className="col-4 full-height" id="results-details">
                     <h1>Coworking spaces</h1>
                     <ul className="list-group">
-                        {items.map(function (item, key) {
-                            return (
-                                <li key={key} className="list-group-item">
-                                    <h5>{item.properties.name}</h5>
-                                    <p>{item.properties.address.street}</p>
-                                    <a href={item.properties.website} target="_blank">website</a>
-                                </li>
-                            )
-                        })}
+                        {places.features.map((place, key) => (
+                            <li key={key} className="list-group-item">
+                                <h5>{place.properties.name}</h5>
+                                <p>{place.properties.address.street}</p>
+                                <a href={place.properties.website} target="_blank">website</a>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </div>
@@ -116,4 +114,7 @@ class Application extends React.Component {
     }
 }
 
-render(<Application/>, document.getElementById('app'));
+render(
+    <Application/>,
+    document.getElementById('app')
+);
