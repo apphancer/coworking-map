@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
 import mapboxgl from 'mapbox-gl';
 import berlinPlaces from '../data/berlin';
 
@@ -7,7 +6,7 @@ let places = {};
 places.type = "FeatureCollection"
 places.features = berlinPlaces;
 
-class Application extends Component {
+export default class CoworkingMap extends Component {
     componentDidMount() {
 
         mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
@@ -113,8 +112,3 @@ class Application extends Component {
         );
     }
 }
-
-render(
-    <Application/>,
-    document.getElementById('app')
-);
