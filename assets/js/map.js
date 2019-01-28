@@ -1,42 +1,11 @@
 import React from 'react';
 import {render} from 'react-dom';
 import mapboxgl from 'mapbox-gl';
-import berlinData from '../data/berlin';
+import berlinPlaces from '../data/berlin';
 
-let placesData = {};
-placesData.type = "FeatureCollection"
-placesData.features = [];
-
-for (let key in berlinData) {
-    let place = {
-        properties: {
-            name: berlinData[key].name,
-            website: berlinData[key].url,
-            description: berlinData[key].notes,
-        },
-        address: {
-            street: berlinData[key].address,
-            postcode: '',
-            city: 'Berlin',
-        },
-        prices: {
-            day: berlinData[key].cost_day,
-            flex: berlinData[key].cost_flex,
-            fixed: berlinData[key].cost_fixed,
-        },
-        geometry: {
-            type: 'Point',
-            coordinates:
-                [
-                    berlinData[key].lng,
-                    berlinData[key].lat,
-                ]
-        }
-    }
-
-    placesData.features.push(place);
-}
-
+let places = {};
+places.type = "FeatureCollection"
+places.features = berlinPlaces;
 
 class Application extends React.Component {
     componentDidMount() {
@@ -55,7 +24,7 @@ class Application extends React.Component {
         map.on('load', (e) => {
             map.addSource('places', {
                 type: 'geojson',
-                data: placesData
+                data: places
             });
 
             map.loadImage('build/images/marker.png', function (error, image) {
@@ -107,7 +76,7 @@ class Application extends React.Component {
                 map.getCanvas().style.cursor = '';
             });
 
-            setTimeout(function(){ map.getSource('places').setData(placesData); }, 3000)
+            setTimeout(function(){ map.getSource('places').setData(places); }, 3000); // @todo[m]: fix issue with layer randomply displaying
         });
     }
 
@@ -119,7 +88,7 @@ class Application extends React.Component {
     }
 
     render() {
-        const items = placesData.features;
+        const items = places.features;
 
         return (
             <div className="row full-height">
@@ -135,7 +104,7 @@ class Application extends React.Component {
                             return (
                                 <li key={key} className="list-group-item">
                                     <h5>{item.properties.name}</h5>
-                                    <p>{item.address.street}</p>
+                                    <p>{item.properties.address.street}</p>
                                     <a href={item.properties.website} target="_blank">website</a>
                                 </li>
                             )
