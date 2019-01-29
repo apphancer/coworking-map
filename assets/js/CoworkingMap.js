@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import mapboxgl from 'mapbox-gl';
 import berlinPlaces from '../data/berlin';
+import CoworkingList from './CoworkingList';
 
 let places = {};
 places.type = "FeatureCollection"
@@ -25,7 +26,7 @@ export default class CoworkingMap extends Component {
                 data: places
             });
 
-            map.loadImage('build/images/marker.png', function (error, image) {
+            map.loadImage('http://localhost:8081/build/images/marker.png', function (error, image) {
                 if (error) throw error;
                 map.addImage('marker', image);
             });
@@ -76,7 +77,7 @@ export default class CoworkingMap extends Component {
 
             setTimeout(function () {
                 map.getSource('places').setData(places);
-            }, 3000); // @todo[m]: fix issue with layer randomply displaying
+            }, 3000); // @todo[m]: fix issue with layer randomly displaying
         });
     }
 
@@ -96,16 +97,7 @@ export default class CoworkingMap extends Component {
                     </div>
                 </div>
                 <div className="col-4 full-height" id="results-details">
-                    <h1>Coworking spaces</h1>
-                    <ul className="list-group">
-                        {places.features.map((place, key) => (
-                            <li key={key} className="list-group-item">
-                                <h5>{place.properties.name}</h5>
-                                <p>{place.properties.address.street}</p>
-                                <a href={place.properties.website} target="_blank">website</a>
-                            </li>
-                        ))}
-                    </ul>
+                    <CoworkingList places={places}/>
                 </div>
             </div>
         );
