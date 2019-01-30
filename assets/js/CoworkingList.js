@@ -4,9 +4,12 @@ export default class CoworkingList extends Component {
     render() {
         const {places} = this.props;
 
+        const totalSpaces = Object.keys(places.features).length;
+
         return (
             <div className="full-height">
                 <h1>Coworking spaces</h1>
+                <p>{totalSpaces} spaces</p>
                 <ul className="list-group">
                     {places.features.map((place, key) => (
                         <li key={key} className="list-group-item">
