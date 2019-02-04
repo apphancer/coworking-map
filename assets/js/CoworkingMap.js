@@ -12,20 +12,25 @@ places.features = berlinPlaces;
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
 export default class CoworkingMap extends Component {
+
     constructor(props) {
         super(props);
+
+        this.state = {
+            activeCardId: null,
+        };
 
         this.handleCardClick = this.handleCardClick.bind(this);
     }
 
+
     handleCardClick(key) {
+        this.setState({activeCardId: key});
+
         let clickedPlace = places.features[key];
 
         flyToPlace(clickedPlace);
-
         createPopUp(clickedPlace);
-
-        // @todo[m]: highlight card in sidebar, remove highlight from all other cards
     }
 
     componentDidMount() {
@@ -60,16 +65,18 @@ export default class CoworkingMap extends Component {
             });
         });
 
+        let that = this;
         map.on('click', 'places', function (e) {
             map.getCanvas().style.cursor = 'pointer';
 
             let currentPlace = e.features[0];
+            let currentPlaceIndex = indexFromPlace(currentPlace);
 
-            flyToPlace(currentPlace);
+            that.setState({activeCardId: currentPlaceIndex});
 
             createPopUp(currentPlace);
-
-            // @todo[m]: highlight card in sidebar, remove highlight from all other cards
+            scrollToCard(currentPlaceIndex);
+            flyToPlace(currentPlace);
         });
 
         map.on('mouseenter', 'places', function () {
@@ -81,14 +88,9 @@ export default class CoworkingMap extends Component {
         });
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return (
-            nextProps.children !== this.props.children ||
-            nextState.map !== this.state.map
-        )
-    }
-
     render() {
+        const {activeCardId} = this.state;
+
         return (
             <div className="row full-height">
                 <div className="col-8 full-height">
@@ -100,6 +102,7 @@ export default class CoworkingMap extends Component {
                     <CoworkingList
                         places={places}
                         onCardClick={this.handleCardClick}
+                        activeCardId={activeCardId}
                     />
                 </div>
             </div>
@@ -124,12 +127,31 @@ function createPopUp(currentPlace) {
     let title = currentPlace.properties.name;
     let address = formatAddress(currentPlace.properties.address);
 
-
     new mapboxgl.Popup({closeOnClick: true})
         .setLngLat(coordinates)
         .setHTML('<h3>' + title + '</h3>' +
             '<p>' + address + '</p>')
         .addTo(map);
+}
+
+function scrollToCard(selectedPlaceIndex) {
+    let scrollToElement = document.getElementById(selectedPlaceIndex);
+    let parentElement = document.getElementsByClassName('list-group')[0];
+
+    // this won't work in Edge and Safari
+    parentElement.scrollTo({
+        top: scrollToElement.offsetTop - parentElement.offsetTop,
+        left: 0,
+        behavior: 'smooth'
+    });
+}
+
+function indexFromPlace(currentPlace) {
+    for (let i = 0; i < places.features.length; i++) {
+        if (JSON.stringify(places.features[i].properties.address) === currentPlace.properties.address) {
+            return i;
+        }
+    }
 }
 
 

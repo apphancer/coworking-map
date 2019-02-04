@@ -87,10 +87,14 @@ body {
 #results-details {
   background-color: $navy-dark;
 
-  ul {
+  ul.list-group {
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+
+    li.active {
+      border: 1px solid $primary;
+    }
 
     li.list-group-item {
       background-color: $navy-dark;
