@@ -93,12 +93,12 @@ export default class CoworkingMap extends Component {
 
         return (
             <div className="row full-height">
-                <div className="col-8 full-height">
+                <div className="col-8 full-height p-0">
                     <div id="map-wrapper">
                         <div ref={el => this.mapContainer = el} className="map" id="map"/>
                     </div>
                 </div>
-                <div className="col-4 full-height" id="results-details">
+                <div className="col-4 full-height p-0 pr-3" id="results-details">
                     <CoworkingList
                         places={places}
                         onCardClick={this.handleCardClick}
@@ -113,7 +113,7 @@ export default class CoworkingMap extends Component {
 function flyToPlace(currentPlace) {
     map.flyTo({
         center: currentPlace.geometry.coordinates,
-        zoom: 15
+        zoom: 16
     });
 }
 
@@ -153,7 +153,6 @@ function indexFromPlace(currentPlace) {
         }
     }
 }
-
 
 function formatAddress(address) {
     let strings = [];

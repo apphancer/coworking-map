@@ -92,12 +92,22 @@ body {
     overflow-y: scroll;
     overflow-x: hidden;
 
-    li.active {
-      border: 1px solid $primary;
-    }
-
     li.list-group-item {
       background-color: $navy-dark;
+      border-left: 3px solid $navy-dark;
+      border-right: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+      border-top: 1px solid rgba(255, 255, 255, 0.25) ;
+      cursor: pointer;
+
+      p.address {
+        font-size: 14px
+      }
+    }
+
+    li.active {
+      background-color: lighten($navy-dark, 5%);
+      border-left: 3px solid $primary;
     }
   }
 }
