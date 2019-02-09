@@ -4,3 +4,5 @@ npm-debug.log
 yarn-error.log
 /web/build/
 ###< webpack-encore ###
+
+assets/data/*
