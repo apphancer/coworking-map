@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
 import mapboxgl from 'mapbox-gl';
-import berlinPlaces from '../data/berlin';
+import places from '../data/places';
 import CoworkingList from './CoworkingList';
 
 let map;
-let places = {};
-
-places.type = "FeatureCollection"
-places.features = berlinPlaces;
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
@@ -138,11 +134,10 @@ function scrollToCard(selectedPlaceIndex) {
     let scrollToElement = document.getElementById(selectedPlaceIndex);
     let parentElement = document.getElementsByClassName('list-group')[0];
 
-    // this won't work in Edge and Safari
     parentElement.scrollTo({
         top: scrollToElement.offsetTop - parentElement.offsetTop,
         left: 0,
-        behavior: 'smooth'
+        behavior: 'smooth' // not supported in Edge and Safari
     });
 }
 
