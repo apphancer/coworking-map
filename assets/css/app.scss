@@ -59,7 +59,7 @@ body, html {
 body {
   background-color: $navy-dark;
   font-family: sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   color: $text-colour;
   line-height: 1.6rem;
   overflow: hidden;
@@ -101,7 +101,12 @@ body {
       cursor: pointer;
 
       p.address {
-        font-size: 14px
+      }
+      ul.rates {
+        color: rgba(255, 255, 255, 0.35);
+        span {
+          color: $text-colour;
+        }
       }
     }
 
