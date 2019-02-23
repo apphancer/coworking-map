@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
+import CoworkingMenu from './CoworkingMenu';
+import places from "../data/places";
+
+const totalSpaces = Object.keys(places.features).length;
 
 export default class CoworkingList extends Component {
     render() {
         const {places, onCardClick, activeCardId} = this.props;
 
-        const totalSpaces = Object.keys(places.features).length;
-
         return (
-            <div className="full-height">
+            <>
                 <div className="p-4">
                     <h1>Coworking spaces</h1>
-                    <a href="#" className="btn btn-outline-primary btn-sm"><i className="fas fa-search"></i></a>
-                    <a href="#" className="btn btn-outline-primary btn-sm"><i className="fas fa-cog"></i></a>
+
+                    <CoworkingMenu />
+
                     <p>{totalSpaces} spaces</p>
                 </div>
                 <ul className="list-group list-group-flush">
@@ -37,7 +40,7 @@ export default class CoworkingList extends Component {
                         </li>
                     ))}
                 </ul>
-            </div>
+            </>
         );
     }
 }
