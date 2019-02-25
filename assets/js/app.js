@@ -5,6 +5,7 @@ import CoworkingMap from './CoworkingMap';
 import '../css/app.scss';
 import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 import "@fortawesome/fontawesome-free/scss/solid.scss";
+import "@fortawesome/fontawesome-free/scss/brands.scss";
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 render(
