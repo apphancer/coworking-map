@@ -40,6 +40,8 @@ export default class CoworkingList extends Component {
                         </li>
                     ))}
                 </ul>
+                <div className="p-4">Made with <span className="text-primary">❤</span> by <a href="https://www.apphancer.com">apphancer</a> &#8226; <a href="https://twitter.com/apphancer"><i className="fab fa-twitter"></i></a>  &#8226; <a href=""><i className="fab fa-github"></i> Errors?</a>
+                </div>
             </>
         );
     }
