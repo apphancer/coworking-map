@@ -14,6 +14,7 @@ export default class CoworkingMap extends Component {
 
         this.state = {
             activeCardId: null,
+            dark: JSON.parse(localStorage.getItem('dark')) || false
         };
 
         this.handleCardClick = this.handleCardClick.bind(this);
@@ -29,39 +30,36 @@ export default class CoworkingMap extends Component {
         createPopUp(clickedPlace);
     }
 
+    onModeChange = () => {
+        this.setState(
+            prevState => ({dark: !prevState.dark}),
+            () => {
+                localStorage.setItem('dark', this.state.dark);
+            }
+        );
+        map.setStyle(this.state.dark ? 'mapbox://styles/mapbox/light-v9' : 'mapbox://styles/mapbox/dark-v9'); // @todo[m]:  refactor this
+    };
+
     componentDidMount() {
         map = new mapboxgl.Map({
             container: this.mapContainer,
             center: [13.392, 52.523],
             zoom: 12,
-            style: 'mapbox://styles/mapbox/dark-v9'
+            style: this.state.dark ? 'mapbox://styles/mapbox/dark-v9' : 'mapbox://styles/mapbox/light-v9' // @todo[m]:  refactor this
         });
 
         map.addControl(new mapboxgl.NavigationControl());
 
-        map.loadImage('http://localhost:8081/build/images/marker.png', function (error, image) {
-            if (error) throw error;
-            map.addImage('marker', image);
+        map.on('load', (e) => {
+            //addDataLayer();
         });
 
-        map.on('load', (e) => {
-            map.addSource('places', {
-                type: 'geojson',
-                data: places
-            });
-
-            map.addLayer({
-                id: 'places',
-                source: 'places',
-                type: 'symbol',
-                layout: {
-                    'icon-image': 'marker',
-                    'icon-size': 0.25
-                }
-            });
+        map.on('style.load', (e) => {
+            addDataLayer();
         });
 
         let that = this;
+
         map.on('click', 'places', function (e) {
             map.getCanvas().style.cursor = 'pointer';
 
@@ -88,7 +86,7 @@ export default class CoworkingMap extends Component {
         const {activeCardId} = this.state;
 
         return (
-            <div className="row full-height">
+            <div className={`row full-height ${this.state.dark ? 'dark' : 'light'}`}>
                 <div className="col-8 full-height p-0">
                     <div id="map-wrapper">
                         <div ref={el => this.mapContainer = el} className="map" id="map"/>
@@ -99,6 +97,8 @@ export default class CoworkingMap extends Component {
                         places={places}
                         onCardClick={this.handleCardClick}
                         activeCardId={activeCardId}
+                        modeStatus={this.state.dark}
+                        onModeChange={this.onModeChange}
                     />
                 </div>
             </div>
@@ -169,4 +169,26 @@ function formatAddress(address) {
     }
 
     return strings.join(', ');
+}
+
+function addDataLayer() {
+    map.loadImage('http://localhost:8081/build/images/marker.png', function (error, image) {
+        if (error) throw error;
+        map.addImage('marker', image);
+    });
+
+    map.addSource('places', {
+        type: 'geojson',
+        data: places
+    });
+
+    map.addLayer({
+        id: 'places',
+        type: 'symbol',
+        source: 'places',
+        layout: {
+            'icon-image': 'marker',
+            'icon-size': 0.25
+        }
+    });
 }

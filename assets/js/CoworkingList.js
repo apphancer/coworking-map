@@ -11,11 +11,12 @@ export default class CoworkingList extends Component {
         return (
             <>
                 <div className="p-4">
-                    <h1>Coworking spaces</h1>
-
-                    <CoworkingMenu />
-
-                    <p>{totalSpaces} spaces</p>
+                    <h1>Berlin Coworking</h1>
+                    <h4>{totalSpaces} spaces</h4>
+                    <CoworkingMenu
+                        modeStatus={this.props.modeStatus}
+                        onModeChange={this.props.onModeChange}
+                    />
                 </div>
                 <ul className="list-group list-group-flush">
                     {places.features.map((place, key) => (
@@ -24,7 +25,7 @@ export default class CoworkingList extends Component {
                             id={key}
                             onClick={() => onCardClick(key)}
                         >
-                            <h5>{place.properties.name}</h5>
+                            <h3>{place.properties.name}</h3>
                             <p className="address">{place.properties.address.street}, {place.properties.address.postcode}, {place.properties.address.city}</p>
 
                             <ul className="rates list-inline">
@@ -33,7 +34,8 @@ export default class CoworkingList extends Component {
                                 {place.properties.rates.flex.length > 0 &&
                                 <li className="list-inline-item"><span>{place.properties.rates.flex}€</span> Flex</li>}
                                 {place.properties.rates.fixed.length > 0 &&
-                                <li className="list-inline-item"><span>{place.properties.rates.fixed}€</span> Fixed</li>}
+                                <li className="list-inline-item"><span>{place.properties.rates.fixed}€</span> Fixed
+                                </li>}
                             </ul>
 
                             <a href={place.properties.website} target="_blank"><i className="fas fa-external-link-alt"></i></a>

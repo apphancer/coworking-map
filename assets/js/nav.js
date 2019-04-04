@@ -18,8 +18,8 @@ class Nav extends React.Component {
                             <input
                                 type="checkbox"
                                 id="color"
-                                checked={this.props.mode}
-                                onChange={this.props.toggleMode}
+                                checked={this.props.modeStatus}
+                                onChange={this.props.onModeChange}
                             />
                             <span className="switch" />
                             <span className="button"> </span>
